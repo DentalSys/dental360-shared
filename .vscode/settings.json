@@ -1,0 +1,5 @@
+{
+  "go.docsTool": "gopls",
+  "go.gotoSymbol.includeGoroot": true,
+  "go.gotoSymbol.includeImports": true
+}
