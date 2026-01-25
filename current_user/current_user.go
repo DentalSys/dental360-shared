@@ -1,4 +1,4 @@
-package currentuser
+package current_user
 
 type CurrentUserType string
 type CurrentUserScope string
@@ -12,13 +12,13 @@ const (
 )
 
 type CurrentUser struct {
-	UserID      string
-	OrgID       *string
-	ClinicID    *string
-	DbSchema    *string
-	Permissions []string
-	Type        CurrentUserType
-	Scope       CurrentUserScope
+	UserID      string           `json:"user_id"`
+	OrgID       *string          `json:"org_id,omitempty"`
+	ClinicID    *string          `json:"clinic_id,omitempty"`
+	DbSchema    *string          `json:"db_schema,omitempty"`
+	Permissions []string         `json:"permissions"`
+	Type        CurrentUserType  `json:"type"`
+	Scope       CurrentUserScope `json:"scope"`
 }
 
 func New(userID string, scope CurrentUserScope) *CurrentUser {

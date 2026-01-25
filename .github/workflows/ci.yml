@@ -1,17 +1,32 @@
-name: CI
+name: CI Core
 
-on: [push, pull_request]
+on: [pull_request]
+
+permissions:
+  contents: read
+
 jobs:
   unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: "1.25.x"
-      # - name: Install dependencies
-      #   run: go mod download
+
+      - name: Configure private modules access
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          go env -w GOPRIVATE=github.com/DentalSys/*
+          go env -w GONOSUMDB=github.com/DentalSys/*
+          git config --global url."https://${GH_TOKEN}@github.com/".insteadOf "https://github.com/"
+
+      - name: Install dependencies
+        run: go mod download
+
       - name: Test (unit)
         run: go test ./...
 
